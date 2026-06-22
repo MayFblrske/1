@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Чат-комната</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f0f0f0;
+    padding: 20px;
+  }
+  #chat-box {
+    width: 100%;
+    max-width: 600px;
+    height: 400px;
+    border: 1px solid #ccc;
+    background: #fff;
+    padding: 10px;
+    overflow-y: auto;
+  }
+  #messages {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  #messages li {
+    margin-bottom: 10px;
+  }
+  #messages .author {
+    font-weight: bold;
+  }
+  #message-form {
+    display: flex;
+    margin-top: 10px;
+  }
+  #message-input {
+    flex: 1;
+    padding: 8px;
+    font-size: 16px;
+  }
+  #send-btn {
+    padding: 8px 16px;
+    font-size: 16px;
+  }
+</style>
+</head>
+<body>
+
+<h2>Чат-комната</h2>
+
+<div id="chat-box">
+  <ul id="messages"></ul>
+</div>
+
+<form id="message-form">
+  <input type="text" id="message-input" placeholder="Введите сообщение..." autocomplete="off" required />
+  <button type="submit" id="send-btn">Отправить</button>
+</form>
+
+<script>
+  const form = document.getElementById('message-form');
+  const input = document.getElementById('message-input');
+  const messagesList = document.getElementById('messages');
+  const chatBox = document.getElementById('chat-box');
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const messageText = input.value.trim();
+    if (messageText !== '') {
+      addMessage('Вы', messageText);
+      input.value = '';
+      // Тут можно отправить сообщение на сервер
+    }
+  });
+
+  function addMessage(author, text) {
+    const li = document.createElement('li');
+    li.innerHTML = `<span class="author">${author}:</span> ${text}`;
+    messagesList.appendChild(li);
+    // Автоматическая прокрутка вниз
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }
+
+  // Пример получения сообщений (имитация)
+  // В реальности нужно подключиться к серверу через WebSocket или AJAX
+  setTimeout(() => {
+    addMessage('Админ', 'Добро пожаловать в чат!');
+  }, 1000);
+</script>
+
+</body>
+</html>
